@@ -4,7 +4,18 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from PIL import Image, ImageFilter
 
+"""
+Este proyecto permite procesar imágenes de manera concurrente aplicando un
+filtro de desenfoque a cada imagen '.jpg' que se encuentre en el directorio 
+'/img'.
+
+El procesamiento se realiza utilizando `ThreadPoolExecutor` para distribuir
+las tareas a diferentes hilos.
+"""
+
 # Función para procesar imágenes
+
+
 def process_image(task: tuple) -> int:
     """
     Procesa una imagen aplicando un filtro de desenfoque y la guarda en el
@@ -40,7 +51,7 @@ def process_image(task: tuple) -> int:
         elapsed_time = time.time() - start_time
         print(f"Worker {worker_id} completó {image_path} en {
               elapsed_time:.2f} segundos y guardada en {output_path}")
-        
+
         # Devuelve 1 si el proceso se completó correctamente
         return 1
     except (IOError, OSError) as e:
@@ -48,7 +59,7 @@ def process_image(task: tuple) -> int:
         # Devuelve 0 si hubo algún error
         return 0
 
-# Función del proceso "master" que distribuye las tareas para ejecutarlas de 
+# Función del proceso "master" que distribuye las tareas para ejecutarlas de
 # manera concurrente
 
 
@@ -76,7 +87,7 @@ if __name__ == '__main__':
     DIRECTORIO_ACTUAL = os.path.dirname(os.path.abspath(__file__))
     CARPETA_IMAGENES = os.path.join(DIRECTORIO_ACTUAL, 'img')
     imagenes = [os.path.join(CARPETA_IMAGENES, f)
-               for f in os.listdir(CARPETA_IMAGENES) if f.endswith('.jpg')]
+                for f in os.listdir(CARPETA_IMAGENES) if f.endswith('.jpg')]
 
     print(f"Inicia el proceso de {len(imagenes)} imágenes...")
 
